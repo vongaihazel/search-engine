@@ -7,6 +7,8 @@ import com.example.searchengine.repository.SearchHistoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -43,5 +45,9 @@ public class SearchController {
     @GetMapping("/test")
     public ResponseEntity<String> test() {
         return ResponseEntity.ok("API is working!");
+    }
+    @GetMapping("/")
+    public ResponseEntity<String> home() {
+        return ResponseEntity.ok("Welcome to the Search Engine API!");
     }
 }

@@ -1,0 +1,21 @@
+services:
+  web:
+    image: openjdk:11-jre
+    container_name: searchengine_app
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+
+  postgres-db:
+    image: postgres:latest
+    container_name: my_postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: mysecretpassword
+      POSTGRES_DB: searchdb
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+
+volumes:
+  pg_data:
