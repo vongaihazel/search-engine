@@ -16,6 +16,8 @@
     <description>Search Engine Project</description>
     <properties>
         <java.version>17</java.version>
+        <maven.surefire.parallel>methods</maven.surefire.parallel>
+        <maven.surefire.parallel.threads>4</maven.surefire.parallel.threads>
     </properties>
     <dependencies>
         <dependency>

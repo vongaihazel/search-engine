@@ -1,10 +1,9 @@
-package com.example.searchengine;
+package com.example.searchengine.service;
 
 import com.example.searchengine.model.SearchHistory;
 import com.example.searchengine.model.User;
 import com.example.searchengine.repository.SearchHistoryRepository;
 import com.example.searchengine.repository.UserRepository;
-import com.example.searchengine.service.SearchService;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
