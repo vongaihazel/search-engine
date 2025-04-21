@@ -1,40 +1,53 @@
 package com.example.searchengine.controller;
 
+import com.example.searchengine.model.SearchHistory;
 import com.example.searchengine.model.User;
-import com.example.searchengine.repository.UserRepository;
+import com.example.searchengine.service.SearchHistoryService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
+import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@SpringBootTest
-@AutoConfigureMockMvc
-@Transactional
+@ExtendWith(MockitoExtension.class)
 public class SearchControllerTest {
 
-    @Autowired
     private MockMvc mockMvc;
 
-    @Autowired
-    private UserRepository userRepository; // Inject UserRepository to access the database
+    @Mock
+    private SearchHistoryService searchHistoryService;
+
+    @InjectMocks
+    private SearchController searchController;
+
+    private User user;
 
     @BeforeEach
     public void setUp() {
-        // Create and save a test user
-        User user = new User();
+        mockMvc = MockMvcBuilders.standaloneSetup(searchController).build();
+
+        user = new User();
+        user.setId(1L);
         user.setUsername("testUser");
-        userRepository.save(user);// Save user to the in-memory database
-        
     }
 
     @Test
     public void testSaveQuery() throws Exception {
+        SearchHistory savedHistory = new SearchHistory();
+        savedHistory.setId(1L);
+        savedHistory.setUser(user);
+        savedHistory.setQuery("test query");
+
+        when(searchHistoryService.saveQuery(1L, "test query")).thenReturn(savedHistory);
+
         mockMvc.perform(post("/search/query")
                         .param("userId", "1")
                         .param("query", "test query"))
