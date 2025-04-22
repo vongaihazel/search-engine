@@ -1,0 +1,19 @@
+<div class="container mt-4">
+  <h2>Search</h2>
+  <div class="form-group">
+    <input
+      [(ngModel)]="query"
+      type="text"
+      class="form-control"
+      placeholder="Enter your search query"
+    />
+  </div>
+  <button class="btn btn-primary" (click)="search()">Search</button>
+
+  <div class="mt-4">
+    <h4>Search History</h4>
+    <select class="form-control" [(ngModel)]="selectedHistory" (change)="useHistory()">
+      <option *ngFor="let history of searchHistory" [value]="history">{{ history }}</option>
+    </select>
+  </div>
+</div>
