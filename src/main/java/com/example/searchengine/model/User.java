@@ -7,6 +7,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.FetchType;
 
 @Entity
 @Table(name = "users")
@@ -17,7 +18,7 @@ public class User {
 
     private String username;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
     private List<SearchHistory> searchHistory;
 
     // Getters and Setters

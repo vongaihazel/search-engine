@@ -18,14 +18,6 @@ public class SearchService {
     @Autowired
     private SearchHistoryRepository searchHistoryRepository;
 
-    public void insertQuery(Long userId, String query) {
-        User user = userRepository.findById(userId).orElseThrow();
-        SearchHistory history = new SearchHistory();
-        history.setUser(user);
-        history.setQuery(query);
-        searchHistoryRepository.save(history);
-    }
-
     public List<SearchHistory> getUserHistory(Long userId) {
         User user = userRepository.findById(userId).orElseThrow();
         return searchHistoryRepository.findByUser(user);
