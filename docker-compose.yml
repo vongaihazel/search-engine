@@ -14,6 +14,14 @@ services:
       - SPRING_DATASOURCE_USERNAME=postgres
       - SPRING_DATASOURCE_PASSWORD=mysecretpassword
 
+  angular:
+    build:
+      context: ./search-app
+      dockerfile: Dockerfile-angular
+    container_name: searchengine_angular
+    ports:
+      - "4200:80"
+
   postgres-db:
     image: postgres:latest
     container_name: my_postgres

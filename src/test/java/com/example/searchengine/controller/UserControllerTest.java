@@ -1,6 +1,6 @@
 package com.example.searchengine.controller;
 
-import com.example.searchengine.model.User;
+import com.example.searchengine.dto.UserDTO;
 import com.example.searchengine.service.UserService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -13,7 +13,9 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.util.List;
-import static org.mockito.Mockito.*;
+
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -29,20 +31,20 @@ public class UserControllerTest {
     @InjectMocks
     private UserController userController;
 
-    private User user;
+    private UserDTO userDTO;
 
     @BeforeEach
     public void setUp() {
         mockMvc = MockMvcBuilders.standaloneSetup(userController).build();
 
-        user = new User();
-        user.setId(1L);
-        user.setUsername("testUser");
+        userDTO = new UserDTO();
+        userDTO.setId(1L);
+        userDTO.setUsername("testUser");
     }
 
     @Test
     public void testGetAllUsers() throws Exception {
-        when(userService.getAllUsers()).thenReturn(List.of(user));
+        when(userService.getAllUsers()).thenReturn(List.of(userDTO));
 
         mockMvc.perform(get("/users"))
                 .andExpect(status().isOk());
@@ -50,7 +52,7 @@ public class UserControllerTest {
 
     @Test
     public void testCreateUser() throws Exception {
-        when(userService.createUser(any(User.class))).thenReturn(user);
+        when(userService.createUser(any(UserDTO.class))).thenReturn(userDTO);
 
         mockMvc.perform(post("/users")
                         .contentType(MediaType.APPLICATION_JSON)
